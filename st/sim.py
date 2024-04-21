@@ -1,5 +1,6 @@
 from sklearn.metrics.pairwise import euclidean_distances
 from dataclasses import dataclass, field
+from typing import Tuple
 import numpy as np
 
 @dataclass(frozen=False, unsafe_hash=True)
@@ -43,7 +44,7 @@ class Simulation:
         return ar_fl_time_series
 
     @staticmethod
-    def create_dataset(sim_num: int = 1, size: int = 200, seeds: list = 234) -> np.ndarray:
+    def create_dataset(sim_num: int = 1, size: int = 200, seeds: list = 234) -> Tuple[np.ndarray, np.ndarray]:
         np.random.seed(seeds)
         x = np.random.uniform(size=size, low=0, high=25)
         np.random.seed(seeds+1)
@@ -54,7 +55,7 @@ class Simulation:
         means = np.zeros(mat.shape[0])
         np.random.seed(seeds+2)
         sim_data = np.random.multivariate_normal(np.zeros(mat.shape[0]), matCov, sim_num)
-        return sim_data
+        return sim_data, sample_points
 
 
 
